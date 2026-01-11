@@ -1,0 +1,24 @@
+# Build directories
+build/
+build-vs/
+out/
+
+# IDE
+.vs/
+.vscode/
+*.user
+CMakeSettings.json
+
+# Compiled
+*.dll
+*.pdb
+*.obj
+*.lib
+*.exp
+
+# vcpkg
+vcpkg_installed/
+
+# Misc
+*.log
+cmake_error.txt

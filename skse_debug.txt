@@ -1,0 +1,6 @@
+[2026-01-10 17:28:02.198] [log] [info] [main.cpp:28] LoadingScreenLocker v1-0-0-0 loaded
+[2026-01-10 17:28:02.198] [log] [info] [main.cpp:57] LoadingScreenLocker plugin initializing...
+[2026-01-10 17:28:02.198] [log] [info] [Settings.cpp:18] No INI file found at Data/SKSE/Plugins/LoadingScreenLocker.ini, using defaults
+[2026-01-10 17:28:02.198] [log] [info] [main.cpp:71] LoadingScreenLocker initialization complete
+[2026-01-10 17:28:46.663] [log] [info] [main.cpp:38] Data loaded - registering input handler
+[2026-01-10 17:28:46.663] [log] [info] [InputHandler.cpp:14] InputHandler registered with BSInputDeviceManager

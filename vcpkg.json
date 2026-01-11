@@ -1,0 +1,11 @@
+{
+    "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+    "name": "loadingscreenlocker",
+    "version-string": "1.0.0",
+    "description": "SKSE plugin to disable loading screen 3D model manipulation",
+    "license": "MIT",
+    "dependencies": [
+        "commonlibsse-ng",
+        "simpleini"
+    ]
+}
