@@ -61,8 +61,17 @@ RE::BSEventNotifyControl MenuControlsHook::ProcessEvent_Hook(
   auto *handler = InputHandler::GetSingleton();
   auto *settings = Settings::GetSingleton();
 
+  // Debug logging state (static to persist across calls)
+  static bool wasFiltering = false;
+
   // Only filter if enabled and loading menu is active
   if (settings->bEnable && handler->IsLoadingMenuActive() && a_event) {
+    // Debug logging (only log once per loading screen)
+    if (settings->bDebugLogging && !wasFiltering) {
+      logger::info("Loading Menu active - filtering rotation input");
+      wasFiltering = true;
+    }
+
     // Iterate through the event chain and zero rotation/zoom inputs
     for (auto *event = *a_event; event; event = event->next) {
       if (!event) {
@@ -93,6 +102,12 @@ RE::BSEventNotifyControl MenuControlsHook::ProcessEvent_Hook(
         }
       }
     }
+  } else {
+    // Reset debug logging flag when not filtering
+    if (wasFiltering && settings->bDebugLogging) {
+      logger::info("Loading Menu closed - filtering stopped");
+    }
+    wasFiltering = false;
   }
 
   // Call the original function

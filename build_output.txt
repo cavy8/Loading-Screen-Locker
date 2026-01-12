@@ -1,7 +1,8 @@
 MSBuild version 17.14.23+b0019275e for .NET Framework
 
-  main.cpp
   InputHandler.cpp
+  Settings.cpp
+  main.cpp
   Generating Code...
      Creating library D:/Skyrim - Dev/Loading Screen Locker/build/Release/LoadingScreenLocker.lib and object D:/Skyrim - Dev/Loading Screen Locker/build/Release/LoadingScreenLocker.exp
   LoadingScreenLocker.vcxproj -> D:\Skyrim - Dev\Loading Screen Locker\build\Release\LoadingScreenLocker.dll

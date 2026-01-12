@@ -57,11 +57,15 @@ void Settings::Load() {
     }
   }
 
+  // Debug
+  bDebugLogging = ini.GetBoolValue("Debug", "bDebugLogging", bDebugLogging);
+
   logger::info("Settings loaded:");
   logger::info("  bEnable = {}", bEnable);
   logger::info("  bDisableMouseMove = {}", bDisableMouseMove);
   logger::info("  bDisableThumbsticks = {}", bDisableThumbsticks);
   logger::info("  bUserEventGate = {}", bUserEventGate);
+  logger::info("  bDebugLogging = {}", bDebugLogging);
   logger::info("  Allowlist entries: {}", userEventAllowlist.size());
 }
 

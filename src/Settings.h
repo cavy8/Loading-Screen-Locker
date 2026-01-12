@@ -24,6 +24,9 @@ public:
   bool bUserEventGate = true;
   std::vector<std::string> userEventAllowlist = {"rotate", "look"};
 
+  // Debug logging
+  bool bDebugLogging = false;
+
 private:
   Settings() = default;
   Settings(const Settings &) = delete;
