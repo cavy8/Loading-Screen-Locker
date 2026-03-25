@@ -4,11 +4,14 @@ An SKSE plugin for Skyrim SE/AE that prevents user-driven rotation and zoom of 3
 
 ## Features
 
-- **Disables mouse movement** from rotating/zooming loading screen 3D models
-- **Disables both gamepad thumbsticks** from manipulating models
+- **Disables mouse/thumbstick input** from rotating/zooming loading screen 3D models
 - **Preserves all other inputs** - buttons, keyboard, D-pad, triggers, mouse buttons, and scroll wheel still work normally
-- **Compatible with loading screen overhaul mods** - only touches rotation/zoom axes
+- **Compatible with loading screen overhaul mods** - only touches rotation/zoom axes. Tested with Loading Menu Overhaul
 - **Configurable** via INI file
+
+## Why?
+
+This mod is intended to be used with 2D loading screen replacers, such as this one.
 
 ## Installation
 
@@ -44,9 +47,10 @@ Set `bUserEventGate=false` for more aggressive filtering that zeros all mouse mo
 
 ## Compatibility
 
-- **Skyrim SE** (1.5.x) ✅
-- **Skyrim AE** (1.6.x) ✅
-- **Loading screen overhaul mods** - Compatible; other inputs remain functional
+- **Skyrim SE** (1.5.x) - Compatible (in theory)
+- **Skyrim AE** (1.6.x) - Compatible (tested)
+- **Skyrim VR** - Not supported
+- **Loading screen overhaul mods** - Compatible, other inputs remain functional
 
 ## Building from Source
 
@@ -65,10 +69,6 @@ cmake --build build --config Release
 ```
 
 Output: `build/Release/LoadingScreenLocker.dll`
-
-## Technical Details
-
-This plugin hooks `MenuControls::ProcessEvent` to intercept input events before they reach the loading screen's 3D model handler. When the Loading Menu is active, mouse movement deltas and thumbstick axis values are set to zero, preventing rotation/zoom while allowing all other input types through unmodified.
 
 ## License
 
