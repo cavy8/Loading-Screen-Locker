@@ -3,9 +3,13 @@
     "name": "loadingscreenlocker",
     "version-string": "1.0.0",
     "description": "SKSE plugin to disable loading screen 3D model manipulation",
-    "license": "MIT",
+    "license": "GPL-3.0-only",
     "dependencies": [
-        "commonlibsse-ng",
-        "simpleini"
+        { "name": "directxmath", "version>=": "2025-04-03" },
+        { "name": "directxtk", "version>=": "2025-10-27" },
+        { "name": "fmt", "version>=": "12.1.0" },
+        { "name": "rapidcsv", "version>=": "8.90" },
+        { "name": "simpleini", "version>=": "4.25" },
+        { "name": "spdlog", "version>=": "1.16.0" }
     ]
 }

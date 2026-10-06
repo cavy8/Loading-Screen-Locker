@@ -7,6 +7,7 @@ set(PROJECT_VERSION 1.0.0)
 # CommonLib NG CMake setup
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 # ---- Project ----
 project(
@@ -21,7 +22,38 @@ if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
 endif()
 
 # ---- Dependencies ----
-find_package(CommonLibSSE REQUIRED)
+include(FetchContent)
+
+# Build one DLL for SE (1.5), AE (1.6/1.7), and VR.
+set(ENABLE_SKYRIM_SE ON CACHE BOOL "Support Skyrim SE" FORCE)
+set(ENABLE_SKYRIM_AE ON CACHE BOOL "Support Skyrim AE" FORCE)
+set(ENABLE_SKYRIM_VR ON CACHE BOOL "Support Skyrim VR" FORCE)
+set(BUILD_TESTS OFF CACHE BOOL "Build CommonLibSSE tests")
+# This plugin only writes a vtable entry; it does not use trampoline patches.
+set(SKSE_SUPPORT_PATCH_SAFETY OFF CACHE BOOL "Validate trampoline patch sites")
+
+FetchContent_Declare(
+    CommonLibSSE
+    GIT_REPOSITORY https://github.com/alandtse/CommonLibSSE-NG.git
+    GIT_TAG 94faaed0c60eddd8347767f2d4d29a97c93bde8c # 11.0.0, ng
+    GIT_SUBMODULES extern/openvr
+)
+FetchContent_MakeAvailable(CommonLibSSE)
+include(${commonlibsse_SOURCE_DIR}/cmake/CommonLibSSE.cmake)
+find_path(SIMPLEINI_INCLUDE_DIRS SimpleIni.h REQUIRED)
+
+option(LSL_BUILD_TESTS "Build runtime compatibility checks" OFF)
+if(LSL_BUILD_TESTS)
+    enable_testing()
+    add_executable(RuntimeCompatibilityTests tests/RuntimeCompatibility.cpp)
+    target_link_libraries(RuntimeCompatibilityTests PRIVATE CommonLibSSE::CommonLibSSE)
+    target_compile_definitions(RuntimeCompatibilityTests PRIVATE ENABLE_COMMONLIBSSE_TESTING=1)
+    if(MSVC)
+        target_compile_options(RuntimeCompatibilityTests PRIVATE /EHsc /utf-8)
+    endif()
+    add_test(NAME RuntimeCompatibility COMMAND RuntimeCompatibilityTests
+        "${commonlibsse_SOURCE_DIR}/tests/REL")
+endif()
 
 # ---- Source Files ----
 set(SOURCES
@@ -40,6 +72,7 @@ set(HEADERS
 add_commonlibsse_plugin(
     ${PROJECT_NAME}
     AUTHOR "cavy8"
+    USE_ADDRESS_LIBRARY
     SOURCES ${SOURCES} ${HEADERS}
 )
 
@@ -54,6 +87,7 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY
 target_include_directories(${PROJECT_NAME}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${SIMPLEINI_INCLUDE_DIRS}
 )
 
 # ---- Precompiled headers ----

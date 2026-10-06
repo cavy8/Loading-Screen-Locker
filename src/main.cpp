@@ -54,6 +54,7 @@ SKSEPluginLoad(const SKSE::LoadInterface *a_skse) {
   SKSE::Init(a_skse);
 
   SetupLog();
+  logger::info("Skyrim runtime {}", REL::Module::get().version().string());
   logger::info("LoadingScreenLocker plugin initializing...");
 
   // Load configuration from INI
